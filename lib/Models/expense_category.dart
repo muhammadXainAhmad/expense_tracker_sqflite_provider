@@ -1,3 +1,4 @@
+import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:flutter/widgets.dart';
 
 class ExpenseCategory {
@@ -24,7 +25,7 @@ class ExpenseCategory {
       title: map["title"],
       entries: map["entries"],
       totalAmount: map["totalAmount"],
-      icon: IconData(map["icon"], fontFamily: 'MaterialIcons'),
+      icon: icons[map["title"]]!,
     );
   }
 }
