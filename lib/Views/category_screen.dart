@@ -13,6 +13,20 @@ class CategoryScreen extends StatelessWidget {
         actions: [Icon(Icons.notifications_none_rounded, size: 36)],
       ),
       drawer: Container(),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        unselectedItemColor: Colors.deepPurple.shade100,
+        selectedItemColor: Colors.red,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: "Settings",
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           children: [
@@ -51,7 +65,42 @@ class CategoryScreen extends StatelessWidget {
                 ),
               ],
             ),
-            ListView.builder(itemBuilder: (context, index) {}),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 18,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      "Travel",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text("Cash | Card"),
+                    leading: Stack(
+                      children: [
+                        Icon(Icons.circle, color: Colors.purple),
+                        Icon(
+                          Icons.airplanemode_active_rounded,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          r"$498.50",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text("32%", style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
