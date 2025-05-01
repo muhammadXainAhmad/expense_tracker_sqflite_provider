@@ -1,5 +1,8 @@
+import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
+import 'package:expense_tracker_sqflite_provider/Models/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -13,7 +16,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
-    
+    Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
   }
 
   @override
@@ -159,45 +162,53 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 18,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: () {
-                      Navigator.pushNamed(context, ExpenseScreen.name);
-                    },
-                    title: Text(
-                      "Travel",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Text("Cash | Card"),
-                    leading: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Icon(Icons.circle, color: Colors.purple, size: 40),
-                        Icon(
-                          Icons.airplanemode_active_rounded,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                    trailing: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          r"$498.50",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+            Consumer<CategoryProvider>(
+              builder: (context, categoryProvider, child) {
+                if (categoryProvider.isLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: categoryProvider.categories.length,
+                    itemBuilder: (context, index) {
+                      final category = categoryProvider.categories[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, ExpenseScreen.name);
+                          },
+                          leading: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(
+                                Icons.circle,
+                                size: 50,
+                                color: Colors.purpleAccent.shade100,
+                              ),
+                              Icon(icons[category['title']] ?? Icons.category),
+                            ],
+                          ),
+                          title: Text(
+                            category['title'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          trailing: Text(
+                            '\$${category['totalAmount']}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                        Text("32%", style: TextStyle(fontSize: 14)),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),

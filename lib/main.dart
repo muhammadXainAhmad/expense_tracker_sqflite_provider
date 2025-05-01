@@ -1,9 +1,18 @@
+import 'package:expense_tracker_sqflite_provider/Models/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CategoryProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
