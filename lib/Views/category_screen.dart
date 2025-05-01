@@ -110,57 +110,47 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: Icon(Icons.add),
       ),
       drawer: Container(),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        unselectedItemColor: Colors.deepPurple.shade100,
-        selectedItemColor: Colors.red,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
-          ),
-        ],
-      ),
+
       body: Center(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 100,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(child: Text("Day")),
-                ),
-                Container(
-                  width: 100,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(child: Text("Week")),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
                     width: 100,
                     height: 80,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(child: Text("Month")),
+                    child: Center(child: Text("Day")),
                   ),
-                ),
-              ],
+                  Container(
+                    width: 100,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(child: Text("Week")),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      width: 100,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(child: Text("Month")),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Consumer<CategoryProvider>(
               builder: (context, categoryProvider, child) {
@@ -184,9 +174,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               Icon(
                                 Icons.circle,
                                 size: 50,
-                                color: Colors.purpleAccent.shade100,
+                                color:
+                                    categoryColors[category['title']] ??
+                                    Colors.grey,
                               ),
-                              Icon(icons[category['title']] ?? Icons.category),
+                              Icon(
+                                icons[category['title']] ?? Icons.category,
+                                size: 26,
+                              ),
                             ],
                           ),
                           title: Text(

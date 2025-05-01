@@ -1,3 +1,4 @@
+import 'package:expense_tracker_sqflite_provider/Models/btm_nav_bar.dart';
 import 'package:expense_tracker_sqflite_provider/Models/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
@@ -25,11 +26,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      initialRoute: CategoryScreen.name,
+
       routes: {
         CategoryScreen.name: (context) => const CategoryScreen(),
         ExpenseScreen.name: (context) => const ExpenseScreen(),
       },
+      home: BottomNavBar(),
     );
   }
 }
