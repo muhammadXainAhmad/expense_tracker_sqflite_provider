@@ -1,4 +1,5 @@
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       initialRoute: CategoryScreen.name,
-      routes: {CategoryScreen.name: (context) => const CategoryScreen()},
+      routes: {
+        CategoryScreen.name: (context) => const CategoryScreen(),
+        ExpenseScreen.name: (context) => const ExpenseScreen(),
+      },
     );
   }
 }

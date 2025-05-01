@@ -1,3 +1,4 @@
+import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -27,7 +28,7 @@ class CategoryScreen extends StatelessWidget {
                         child: Container(
                           width: 150,
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -53,7 +54,7 @@ class CategoryScreen extends StatelessWidget {
                         child: Container(
                           width: 150,
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: DropdownButtonHideUnderline(
@@ -151,7 +152,9 @@ class CategoryScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 18,
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  return ListTile(onTap: () {
+                  Navigator.pushNamed(context, ExpenseScreen.name);
+                  },
                     title: Text(
                       "Travel",
                       style: TextStyle(fontWeight: FontWeight.bold),
