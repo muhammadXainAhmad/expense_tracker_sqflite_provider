@@ -1,3 +1,4 @@
+import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +13,19 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    CategoryScreen(),
-    ExpenseScreen(),
-    ExpenseScreen(),
-  ];
+  final List<Widget> _pages = [CategoryScreen(), ExpenseScreen()];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 1) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => const AddExpenseScreen(),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index == 2 ? 1 : 0;
+      });
+    }
   }
 
   @override
@@ -29,7 +33,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+        currentIndex: _selectedIndex == 1 ? 2 : _selectedIndex,
         onTap: _onItemTapped,
         showSelectedLabels: false,
         showUnselectedLabels: false,
