@@ -1,9 +1,20 @@
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
   static const name = "category_screen";
+
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,9 +163,10 @@ class CategoryScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 18,
                 itemBuilder: (context, index) {
-                  return ListTile(onTap: () {
-                  Navigator.pushNamed(context, ExpenseScreen.name);
-                  },
+                  return ListTile(
+                    onTap: () {
+                      Navigator.pushNamed(context, ExpenseScreen.name);
+                    },
                     title: Text(
                       "Travel",
                       style: TextStyle(fontWeight: FontWeight.bold),

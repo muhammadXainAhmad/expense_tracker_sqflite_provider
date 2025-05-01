@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DbProvider {
+class DBHelper {
   static final String cTable = "categoryTable";
   static final String eTable = "expenseTable";
 
@@ -46,7 +46,8 @@ class DbProvider {
     List<Map<String, dynamic>> mData = await db.query(cTable);
     return mData;
   }
-/*Future<List<ExpenseCategory>> getCategory() async {
+
+  /*Future<List<ExpenseCategory>> getCategory() async {
   var db = await getDB();
   List<Map<String, dynamic>> mData = await db.query(cTable);
   return mData.map((map) => ExpenseCategory.fromMap(map)).toList();
