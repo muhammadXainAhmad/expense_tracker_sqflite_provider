@@ -46,7 +46,11 @@ class DbProvider {
     List<Map<String, dynamic>> mData = await db.query(cTable);
     return mData;
   }
-
+/*Future<List<ExpenseCategory>> getCategory() async {
+  var db = await getDB();
+  List<Map<String, dynamic>> mData = await db.query(cTable);
+  return mData.map((map) => ExpenseCategory.fromMap(map)).toList();
+}*/
   Future<List<Map<String, dynamic>>> getExpense() async {
     var db = await getDB();
     List<Map<String, dynamic>> mData = await db.query(eTable);
