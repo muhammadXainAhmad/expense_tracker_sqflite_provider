@@ -1,5 +1,5 @@
 import 'package:expense_tracker_sqflite_provider/Models/db_helper.dart';
-import 'package:expense_tracker_sqflite_provider/Models/expense_category.dart';
+import 'package:expense_tracker_sqflite_provider/Models/expense_category_model.dart';
 import 'package:flutter/material.dart';
 
 class CategoryProvider with ChangeNotifier {

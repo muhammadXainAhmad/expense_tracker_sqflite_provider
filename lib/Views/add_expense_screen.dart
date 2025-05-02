@@ -1,4 +1,7 @@
+import 'package:expense_tracker_sqflite_provider/Models/category_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Models/drop_down_provider';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddExpenseScreen extends StatelessWidget {
   const AddExpenseScreen({super.key});
@@ -19,13 +22,29 @@ class AddExpenseScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    dropdownColor: Colors.purple,
-                    items: const [
-                      DropdownMenuItem(value: 'Cash', child: Text('Cash')),
-                      DropdownMenuItem(value: 'Card', child: Text('Card')),
-                    ],
-                    onChanged: (value) {},
+                  child: Consumer<DropdownProvider>(
+                    builder: (context, dropdownprovider, child) {
+                      return DropdownButton(
+                        value: dropdownprovider.selectedValue1,
+                        iconEnabledColor: Colors.white,
+                        iconSize: 32,
+                        items: const [
+                          DropdownMenuItem<String>(
+                            value: 'Cash',
+                            child: Text('Cash'),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'Card',
+                            child: Text('Card'),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value != null) {
+                            dropdownprovider.updateSelectedValue1(value);
+                          }
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
@@ -39,24 +58,26 @@ class AddExpenseScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'Transportation',
-                        child: Text('Transportation'),
-                      ),
-                      DropdownMenuItem(value: 'Sports', child: Text('Sports')),
-                      DropdownMenuItem(value: 'Food', child: Text('Food')),
-                      DropdownMenuItem(
-                        value: 'Entertainment',
-                        child: Text('Entertainment'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'Education',
-                        child: Text('Education'),
-                      ),
-                    ],
-                    onChanged: (value) {},
+                  child: Consumer2<CategoryProvider, DropdownProvider>(
+                    builder: (context, categoryprovider, dropprovider, child) {
+                      return DropdownButton(
+                      value: dropprovider.selectedValue2,
+                        iconEnabledColor: Colors.white,
+                        iconSize: 32,
+                        items:
+                            categoryprovider.categories.map((category) {
+                              return DropdownMenuItem<String>(
+                                value: category.title,
+                                child: Text(category.title),
+                              );
+                            }).toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            dropprovider.updateSelectedValue2(value);
+                          }
+                        },
+                      );
+                    },
                   ),
                 ),
               ),
