@@ -1,6 +1,5 @@
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Models/category_provider.dart';
-import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+    Future.microtask(() {
+      if (!mounted) return;
+      Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
+    });
   }
 
   @override
