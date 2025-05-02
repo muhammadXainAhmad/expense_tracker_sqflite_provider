@@ -8,9 +8,7 @@ class ExpenseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          
-        ),
+        title: Text("Expense Screen")
       ),
     );
   }

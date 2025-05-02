@@ -37,13 +37,25 @@ class _BottomNavBarState extends State<BottomNavBar> {
         onTap: _onItemTapped,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        unselectedItemColor: Colors.deepPurple.shade100,
-        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.black,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: "Add"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.home_outlined, size: 36),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Stack(
+              alignment: Alignment.center,
+              children: [
+                Icon(Icons.circle, size: 60, color: Colors.black),
+                Icon(Icons.add, size: 36, color: Colors.white),
+              ],
+            ),
+            label: "Add",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined, size: 32),
             label: "Settings",
           ),
         ],

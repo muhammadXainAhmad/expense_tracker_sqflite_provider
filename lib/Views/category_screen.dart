@@ -28,9 +28,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Column(children: [Text(r"$32,500.00"), Text("Total Balance")]),
-        actions: [Icon(Icons.notifications_none_rounded, size: 36)],
+        actions: [Icon(Icons.notifications_none_rounded, size: 30)],
       ),
-      drawer: Container(),
 
       body: Center(
         child: Column(
@@ -96,24 +95,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 Icons.circle,
                                 size: 50,
                                 color:
-                                    categoryColors[category['title']] ??
+                                    categoryColors[category.title] ??
                                     Colors.grey,
                               ),
                               Icon(
-                                icons[category['title']] ?? Icons.category,
+                                icons[category.title] ?? Icons.category,
                                 size: 26,
                               ),
                             ],
                           ),
                           title: Text(
-                            category['title'],
+                            category.title,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                           ),
                           trailing: Text(
-                            '\$${category['totalAmount']}',
+                            '\$${category.totalAmount}',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

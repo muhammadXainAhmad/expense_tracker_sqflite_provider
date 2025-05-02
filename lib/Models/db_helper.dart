@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
+import 'package:expense_tracker_sqflite_provider/Models/expense_category.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -41,17 +42,12 @@ class DBHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getCategory() async {
+  Future<List<ExpenseCategory>>getCategory() async {
     var db = await getDB();
     List<Map<String, dynamic>> mData = await db.query(cTable);
-    return mData;
+    return mData.map((map) => ExpenseCategory.fromMap(map)).toList();
   }
 
-  /*Future<List<ExpenseCategory>> getCategory() async {
-  var db = await getDB();
-  List<Map<String, dynamic>> mData = await db.query(cTable);
-  return mData.map((map) => ExpenseCategory.fromMap(map)).toList();
-}*/
   Future<List<Map<String, dynamic>>> getExpense() async {
     var db = await getDB();
     List<Map<String, dynamic>> mData = await db.query(eTable);
