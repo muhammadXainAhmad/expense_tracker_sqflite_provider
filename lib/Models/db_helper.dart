@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Models/expense_category_model.dart';
+import 'package:expense_tracker_sqflite_provider/Models/expense_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -54,9 +55,9 @@ class DBHelper {
     return mData.map((map) => ExpenseCategory.fromMap(map)).toList();
   }
 
-  Future<List<Map<String, dynamic>>> getExpense() async {
+  Future<List<Expense>> getExpense() async {
     var db = await getDB();
     List<Map<String, dynamic>> mData = await db.query(eTableName);
-    return mData;
+    return mData.map((map) => Expense.fromMap(map)).toList();
   }
 }
