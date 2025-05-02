@@ -9,9 +9,9 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _pages = [CategoryScreen(), ExpenseScreen()];
+    final List<Widget> pages = [CategoryScreen(), ExpenseScreen()];
     final navProvider = Provider.of<BottomNavProvider>(context);
-    void _onItemTapped(int index) {
+    void onItemTapped(int index) {
       if (index == 1) {
         showModalBottomSheet(
           context: context,
@@ -23,11 +23,11 @@ class BottomNavBar extends StatelessWidget {
     }
 
     return Scaffold(
-      body: _pages[navProvider.selectedIndex],
+      body: pages[navProvider.selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex:
             navProvider.selectedIndex == 1 ? 2 : navProvider.selectedIndex,
-        onTap: _onItemTapped,
+        onTap: onItemTapped,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         unselectedItemColor: Colors.grey,
