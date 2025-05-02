@@ -12,6 +12,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
         ChangeNotifierProvider(create: (context) => DropdownProvider()),
+        ChangeNotifierProvider(create: (context) => BottomNavProvider()),
       ],
       child: MyApp(),
     ),
