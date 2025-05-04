@@ -186,7 +186,31 @@ class AddExpenseScreen extends StatelessWidget {
             width: 300,
             height: 50,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (amountContoller.text.isEmpty ||
+                    titleController.text.isEmpty ||
+                    context.read<DropdownProvider>().selectedValue1.isEmpty ||
+                    context.read<DropdownProvider>().selectedValue2.isEmpty) {
+                  return;
+                }
+
+                final title = titleController.text;
+                final amount = double.tryParse(amountContoller.text) ?? 0;
+                final category =
+                    context.read<DropdownProvider>().selectedValue2;
+                final amountType =
+                    context.read<DropdownProvider>().selectedValue1;
+                final date = context.read<AddExpenseProvider>().selectedDate;
+
+                AddExpenseProvider().addExpenseItem(
+                  title: title,
+                  amount: amount,
+                  category: category,
+                  amountType: amountType,
+                  date: date,
+                );
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue.shade700,
                 foregroundColor: Colors.white,
