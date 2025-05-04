@@ -37,9 +37,10 @@ class AddExpenseProvider with ChangeNotifier {
       amount: amount,
       date: date,
       category: category,
-      amountType: amountType,
+      type: amountType,
     );
     await dbHelper.addExpenseItem(expense);
+    getExpense();
     _isExpenseAdded = true;
     notifyListeners();
   }
