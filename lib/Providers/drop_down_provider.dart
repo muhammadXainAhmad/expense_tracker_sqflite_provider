@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DropdownProvider with ChangeNotifier {
   String _selectedValue1 = 'Cash';
-  String _selectedValue2 = 'Category';
+  String _selectedValue2 = 'Bills';
 
   String get selectedValue1 => _selectedValue1;
   String get selectedValue2 => _selectedValue2;
