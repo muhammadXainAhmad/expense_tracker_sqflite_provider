@@ -21,6 +21,9 @@ class AddExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isExpenseAdded = false;
+  bool get isExpenseAdded => _isExpenseAdded;
+
   void addExpenseItem({
     required String title,
     required double amount,
@@ -37,6 +40,21 @@ class AddExpenseProvider with ChangeNotifier {
       amountType: amountType,
     );
     await dbHelper.addExpenseItem(expense);
+    _isExpenseAdded = true;
+    notifyListeners();
+  }
+
+  void resetExpenseAddedFlag() {
+    _isExpenseAdded = false;
+    notifyListeners();
+  }
+
+  List<Expense> _expenseList = [];
+  List<Expense> get expenseList => _expenseList;
+
+  void getExpense() async {
+    List<Expense> expenses = await dbHelper.getExpense();
+    _expenseList = expenses;
     notifyListeners();
   }
 }

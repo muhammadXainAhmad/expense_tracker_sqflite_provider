@@ -216,6 +216,14 @@ class AddExpenseScreen extends StatelessWidget {
                   amountType: amountType,
                   date: date,
                 );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Expense Added Successfully!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+
+                context.read<AddExpenseProvider>().resetExpenseAddedFlag();
                 Navigator.pop(context);
               },
               style: ElevatedButton.styleFrom(
