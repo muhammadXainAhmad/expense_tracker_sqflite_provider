@@ -1,6 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Providers/add_expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
-import 'package:expense_tracker_sqflite_provider/Models/drop_down_provider';
+import 'package:expense_tracker_sqflite_provider/Providers/drop_down_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -84,25 +84,28 @@ class AddExpenseScreen extends StatelessWidget {
           child: DropdownButtonHideUnderline(
             child: Consumer<DropdownProvider>(
               builder: (context, dropdownprovider, child) {
-                return DropdownButton(
-                  value: dropdownprovider.selectedValue1,
-                  iconEnabledColor: Colors.black,
-                  iconSize: 32,
-                  items: const [
-                    DropdownMenuItem<String>(
-                      value: 'Cash',
-                      child: Text('Cash'),
-                    ),
-                    DropdownMenuItem<String>(
-                      value: 'Card',
-                      child: Text('Card'),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) {
-                      dropdownprovider.updateSelectedValue1(value);
-                    }
-                  },
+                return ButtonTheme(
+                  alignedDropdown: true,
+                  child: DropdownButton(
+                    value: dropdownprovider.selectedValue1,
+                    iconEnabledColor: Colors.black,
+                    iconSize: 32,
+                    items: const [
+                      DropdownMenuItem<String>(
+                        value: 'Cash',
+                        child: Text('Cash'),
+                      ),
+                      DropdownMenuItem<String>(
+                        value: 'Card',
+                        child: Text('Card'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) {
+                        dropdownprovider.updateSelectedValue1(value);
+                      }
+                    },
+                  ),
                 );
               },
             ),
@@ -117,26 +120,64 @@ class AddExpenseScreen extends StatelessWidget {
           child: DropdownButtonHideUnderline(
             child: Consumer2<CategoryProvider, DropdownProvider>(
               builder: (context, categoryprovider, dropprovider, child) {
-                return DropdownButton(
-                  value: dropprovider.selectedValue2,
-                  iconEnabledColor: Colors.black,
-                  iconSize: 32,
-                  items:
-                      categoryprovider.categories.map((category) {
-                        return DropdownMenuItem<String>(
-                          value: category.title,
-                          child: Text(category.title),
-                        );
-                      }).toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      dropprovider.updateSelectedValue2(value);
-                    }
-                  },
+                return ButtonTheme(
+                  alignedDropdown: true,
+                  child: DropdownButton(
+                    value: dropprovider.selectedValue2,
+                    iconEnabledColor: Colors.black,
+                    iconSize: 32,
+                    items:
+                        categoryprovider.categories.map((category) {
+                          return DropdownMenuItem<String>(
+                            value: category.title,
+                            child: Text(category.title),
+                          );
+                        }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        dropprovider.updateSelectedValue2(value);
+                      }
+                    },
+                  ),
                 );
               },
             ),
           ),
+        ),
+        Consumer<AddExpenseProvider>(
+          builder: (context, provider, child) {
+            return SizedBox(
+              width: 300,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () async {
+                  final pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (pickedDate != null) {
+                    provider.updateSelectedDate(pickedDate);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade100,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: Text(
+                  "Date: ${provider.selectedDate.toString().split(" ")[0]}",
+                ),
+              ),
+            );
+          },
         ),
         Spacer(),
         Padding(
