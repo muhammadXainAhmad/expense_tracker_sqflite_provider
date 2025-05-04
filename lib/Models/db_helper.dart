@@ -64,4 +64,9 @@ class DBHelper {
     List<Map<String, dynamic>> mData = await db.query(eTableName);
     return mData.map((map) => Expense.fromMap(map)).toList();
   }
+
+  Future<void> addExpenseItem(Expense expense) async {
+    var db = await getDB();
+    db.insert(eTableName, expense.toMap());
+  }
 }
