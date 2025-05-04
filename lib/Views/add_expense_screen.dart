@@ -191,6 +191,13 @@ class AddExpenseScreen extends StatelessWidget {
                     titleController.text.isEmpty ||
                     context.read<DropdownProvider>().selectedValue1.isEmpty ||
                     context.read<DropdownProvider>().selectedValue2.isEmpty) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please fill all fields'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                   return;
                 }
 
@@ -202,7 +209,7 @@ class AddExpenseScreen extends StatelessWidget {
                     context.read<DropdownProvider>().selectedValue1;
                 final date = context.read<AddExpenseProvider>().selectedDate;
 
-                AddExpenseProvider().addExpenseItem(
+                context.read<AddExpenseProvider>().addExpenseItem(
                   title: title,
                   amount: amount,
                   category: category,
