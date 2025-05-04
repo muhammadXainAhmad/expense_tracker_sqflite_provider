@@ -15,7 +15,12 @@ class BottomNavBar extends StatelessWidget {
       if (index == 1) {
         showModalBottomSheet(
           context: context,
-          builder: (context) => const AddExpenseScreen(),
+          isScrollControlled: true,
+          builder:
+              (context) => SizedBox(
+                height: MediaQuery.of(context).size.height * 0.75,
+                child: const AddExpenseScreen(),
+              ),
         );
       } else {
         navProvider.updateIndex(index == 2 ? 1 : 0);
