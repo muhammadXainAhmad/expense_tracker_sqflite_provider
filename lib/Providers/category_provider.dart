@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class CategoryProvider with ChangeNotifier {
   List<ExpenseCategory> _categories = [];
+  final DBHelper dbHelper = DBHelper.instance;
+
   bool _isLoading = false;
 
   List<ExpenseCategory> get categories => _categories;
@@ -13,7 +15,7 @@ class CategoryProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    _categories = await DBHelper().getCategory();
+    _categories = await dbHelper.getCategory();
 
     _isLoading = false;
     notifyListeners();

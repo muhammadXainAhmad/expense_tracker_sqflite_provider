@@ -8,6 +8,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBHelper {
+  DBHelper._();
+
+  static final DBHelper instance = DBHelper._();
+
   static final String cTableName = "categoryTable";
   static final String eTableName = "expenseTable";
   // cTable column names
