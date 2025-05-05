@@ -55,6 +55,7 @@ class AddExpenseProvider with ChangeNotifier {
 
   void getExpense() async {
     List<Expense> expenses = await dbHelper.getExpense();
+    expenses.sort((a, b) => b.date.compareTo(a.date));
     _expenseList = expenses;
     notifyListeners();
   }
