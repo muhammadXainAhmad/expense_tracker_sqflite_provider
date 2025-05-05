@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 
 class ExpenseCategory {
   final String title;
-  int entries = 0;
   double totalAmount = 0.0;
   final IconData icon;
 
@@ -15,7 +14,6 @@ class ExpenseCategory {
 
   Map<String, dynamic> toMap() => {
     "title": title,
-    "entries": entries,
     "totalAmount": totalAmount
   };
 
