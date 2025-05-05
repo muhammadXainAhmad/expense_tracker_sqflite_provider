@@ -10,7 +10,11 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [CategoryScreen(), ExpenseScreen(),SettingsScreen()];
+    final List<Widget> pages = [
+      CategoryScreen(),
+      ExpenseScreen(),
+      SettingsScreen(),
+    ];
     final navProvider = Provider.of<BottomNavProvider>(context);
 
     return Scaffold(
@@ -53,7 +57,8 @@ class BottomNavBar extends StatelessWidget {
                 ),
                 onPressed: () => navProvider.updateIndex(0),
               ),
-            ), SizedBox(
+            ),
+            SizedBox(
               width: 75,
               height: 120,
               child: IconButton(

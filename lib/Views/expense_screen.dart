@@ -37,59 +37,97 @@ class ExpenseScreen extends StatelessWidget {
                               ),
                               elevation: 2,
                               color: Colors.tealAccent.shade200,
-                              child: ListTile(
-                                leading: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.circle,
-                                      size: 50,
-                                      color:
-                                          categoryColors[expense.category] ??
-                                          Colors.grey,
+                              child: Dismissible(
+                                key: ValueKey(expense.id),
+                                background: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
                                     ),
-                                    Icon(
-                                      icons[expense.category] ?? Icons.category,
-                                      size: 26,
-                                      color: Colors.black,
-                                    ),
-                                  ],
-                                ),
-                                title: Text(
-                                  expense.title,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
                                   ),
                                 ),
-                                subtitle: Text(
-                                  "${expense.type} · ${expense.category}",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
+                                secondaryBackground: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 15.0),
+                                    child: Icon(Icons.edit, color: Colors.white),
                                   ),
                                 ),
-                                trailing: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "- \$${expense.amount}",
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                onDismissed: (direction) {
+                                  if (direction ==
+                                      DismissDirection.startToEnd) {
+                                    // delete
+                                  } else {
+                                    // edit
+                                  }
+                                },
+                                child: ListTile(
+                                  leading: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        size: 50,
+                                        color:
+                                            categoryColors[expense.category] ??
+                                            Colors.grey,
                                       ),
-                                    ),
-                                    Text(
-                                      expense.date.toString().split(" ")[0],
-                                      style: TextStyle(
+                                      Icon(
+                                        icons[expense.category] ??
+                                            Icons.category,
+                                        size: 26,
                                         color: Colors.black,
-                                        fontSize: 14,
                                       ),
+                                    ],
+                                  ),
+                                  title: Text(
+                                    expense.title,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
                                     ),
-                                  ],
+                                  ),
+                                  subtitle: Text(
+                                    "${expense.type} · ${expense.category}",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  trailing: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "- \$${expense.amount}",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        expense.date.toString().split(" ")[0],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
