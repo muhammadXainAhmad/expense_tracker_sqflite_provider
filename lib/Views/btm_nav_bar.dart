@@ -1,6 +1,7 @@
 import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,7 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [CategoryScreen(), ExpenseScreen()];
+    final List<Widget> pages = [CategoryScreen(), ExpenseScreen(),SettingsScreen()];
     final navProvider = Provider.of<BottomNavProvider>(context);
 
     return Scaffold(
@@ -39,7 +40,7 @@ class BottomNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-              width: 150,
+              width: 75,
               height: 120,
               child: IconButton(
                 icon: Icon(
@@ -52,6 +53,20 @@ class BottomNavBar extends StatelessWidget {
                 ),
                 onPressed: () => navProvider.updateIndex(0),
               ),
+            ), SizedBox(
+              width: 75,
+              height: 120,
+              child: IconButton(
+                icon: Icon(
+                  Icons.bar_chart_outlined,
+                  size: 36,
+                  color:
+                      navProvider.selectedIndex == 1
+                          ? Colors.black
+                          : Colors.grey.shade600,
+                ),
+                onPressed: () => navProvider.updateIndex(1),
+              ),
             ),
             SizedBox(width: 50),
             SizedBox(
@@ -63,11 +78,11 @@ class BottomNavBar extends StatelessWidget {
                   Icons.settings_outlined,
                   size: 32,
                   color:
-                      navProvider.selectedIndex == 1
+                      navProvider.selectedIndex == 2
                           ? Colors.black
                           : Colors.grey.shade600,
                 ),
-                onPressed: () => navProvider.updateIndex(1),
+                onPressed: () => navProvider.updateIndex(2),
               ),
             ),
           ],
