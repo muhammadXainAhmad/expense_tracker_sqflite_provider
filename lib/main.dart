@@ -1,4 +1,4 @@
-import 'package:expense_tracker_sqflite_provider/Providers/add_expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/drop_down_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/btm_nav_bar.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';

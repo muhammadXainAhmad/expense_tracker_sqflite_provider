@@ -1,4 +1,4 @@
-import 'package:expense_tracker_sqflite_provider/Providers/add_expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/drop_down_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,87 @@ class AddExpenseScreen extends StatelessWidget {
           endIndent: 190,
           height: 40,
         ),
-        Text("Add Expenses", style: TextStyle(fontSize: 18)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 170,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade100,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: Consumer<DropdownProvider>(
+                  builder: (context, dropdownprovider, child) {
+                    return ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButton(
+                        value: dropdownprovider.selectedValue1,
+                        iconEnabledColor: Colors.black,
+                        iconSize: 32,
+                        items: const [
+                          DropdownMenuItem<String>(
+                            value: 'Cash',
+                            alignment: Alignment.center,
+                            child: Text('Cash'),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: 'Card',
+                            alignment: Alignment.center,
+                            child: Text('Card'),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value != null) {
+                            dropdownprovider.updateSelectedValue1(value);
+                          }
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Container(
+              width: 170,
+              decoration: BoxDecoration(
+                color: Colors.blue.shade100,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: Consumer2<CategoryProvider, DropdownProvider>(
+                  builder: (context, categoryprovider, dropprovider, child) {
+                    return ButtonTheme(
+                      alignedDropdown: true,
+                      child: DropdownButton(
+                        value: dropprovider.selectedValue2,
+                        iconEnabledColor: Colors.black,
+                        iconSize: 32,
+                        items:
+                            categoryprovider.categories.map((category) {
+                              return DropdownMenuItem<String>(
+                                value: category.title,
+                                alignment: Alignment.center,
+                                child: Text(category.title),
+                              );
+                            }).toList(),
+                        onChanged: (value) {
+                          if (value != null) {
+                            dropprovider.updateSelectedValue2(value);
+                          }
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0, bottom: 8),
+          child: Text("Expenses", style: TextStyle(fontSize: 18)),
+        ),
         SizedBox(
           width: 250,
           child: Consumer<AddExpenseProvider>(
@@ -54,96 +134,31 @@ class AddExpenseScreen extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(
-          width: 300,
-          child: TextField(
-            controller: titleController,
-            style: TextStyle(color: Colors.black, fontSize: 18),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              fillColor: Colors.blue.shade100,
-              filled: true,
-              hintText: "Add title...",
-              hintStyle: TextStyle(fontSize: 18, color: Colors.black),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            width: 300,
+            child: TextField(
+              controller: titleController,
+              style: TextStyle(color: Colors.black, fontSize: 18),
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                fillColor: Colors.blue.shade100,
+                filled: true,
+                hintText: "Add comment ...",
+                hintStyle: TextStyle(fontSize: 18, color: Colors.grey.shade800),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
             ),
           ),
         ),
-        Container(
-          width: 300,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade100,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: Consumer<DropdownProvider>(
-              builder: (context, dropdownprovider, child) {
-                return ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                    value: dropdownprovider.selectedValue1,
-                    iconEnabledColor: Colors.black,
-                    iconSize: 32,
-                    items: const [
-                      DropdownMenuItem<String>(
-                        value: 'Cash',
-                        child: Text('Cash'),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: 'Card',
-                        child: Text('Card'),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      if (value != null) {
-                        dropdownprovider.updateSelectedValue1(value);
-                      }
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        Container(
-          width: 300,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade100,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: Consumer2<CategoryProvider, DropdownProvider>(
-              builder: (context, categoryprovider, dropprovider, child) {
-                return ButtonTheme(
-                  alignedDropdown: true,
-                  child: DropdownButton(
-                    value: dropprovider.selectedValue2,
-                    iconEnabledColor: Colors.black,
-                    iconSize: 32,
-                    items:
-                        categoryprovider.categories.map((category) {
-                          return DropdownMenuItem<String>(
-                            value: category.title,
-                            child: Text(category.title),
-                          );
-                        }).toList(),
-                    onChanged: (value) {
-                      if (value != null) {
-                        dropprovider.updateSelectedValue2(value);
-                      }
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
+
         Consumer<AddExpenseProvider>(
           builder: (context, provider, child) {
             return SizedBox(
@@ -174,6 +189,10 @@ class AddExpenseScreen extends StatelessWidget {
                 ),
                 child: Text(
                   "Date: ${provider.selectedDate.toString().split(" ")[0]}",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             );
@@ -194,7 +213,7 @@ class AddExpenseScreen extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Please fill all fields'),
+                      content: Text('Please fill all the fields'),
                       backgroundColor: Colors.red,
                     ),
                   );
