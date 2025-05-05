@@ -1,5 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/drop_down_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/transaction_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/btm_nav_bar.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
@@ -15,6 +16,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => DropdownProvider()),
         ChangeNotifierProvider(create: (context) => BottomNavProvider()),
         ChangeNotifierProvider(create: (context) => AddExpenseProvider()),
+        ChangeNotifierProvider(create: (context) => TransactionTypeProvider()),
       ],
       child: MyApp(),
     ),
