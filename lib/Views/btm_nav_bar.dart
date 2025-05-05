@@ -11,6 +11,96 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> pages = [CategoryScreen(), ExpenseScreen()];
     final navProvider = Provider.of<BottomNavProvider>(context);
+
+    return Scaffold(
+      body: pages[navProvider.selectedIndex],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder:
+                (context) => SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.75,
+                  child: const AddExpenseScreen(),
+                ),
+          );
+        },
+        shape: const CircleBorder(),
+        backgroundColor: Colors.black,
+        child: const Icon(Icons.add, color: Colors.white, size: 32),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 6.0,
+        color: Colors.tealAccent.shade400,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(
+              width: 150,
+              height: 120,
+              child: IconButton(
+                icon: Icon(
+                  Icons.home_outlined,
+                  size: 36,
+                  color:
+                      navProvider.selectedIndex == 0
+                          ? Colors.black
+                          : Colors.grey.shade600,
+                ),
+                onPressed: () => navProvider.updateIndex(0),
+              ),
+            ),
+            SizedBox(width: 50),
+            SizedBox(
+              width: 150,
+              height: 120,
+
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings_outlined,
+                  size: 32,
+                  color:
+                      navProvider.selectedIndex == 1
+                          ? Colors.black
+                          : Colors.grey.shade600,
+                ),
+                onPressed: () => navProvider.updateIndex(1),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BottomNavProvider with ChangeNotifier {
+  int selectedIndex = 0;
+
+  void updateIndex(int index) {
+    selectedIndex = index;
+    notifyListeners();
+  }
+}
+
+
+/*
+import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Widget> pages = [CategoryScreen(), ExpenseScreen()];
+    final navProvider = Provider.of<BottomNavProvider>(context);
     void onItemTapped(int index) {
       if (index == 1) {
         showModalBottomSheet(
@@ -37,6 +127,7 @@ class BottomNavBar extends StatelessWidget {
         showUnselectedLabels: false,
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.black,
+        backgroundColor: Colors.tealAccent.shade400,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined, size: 36),
@@ -70,3 +161,4 @@ class BottomNavProvider with ChangeNotifier {
     notifyListeners();
   }
 }
+*/
