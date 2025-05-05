@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/drop_down_provider.dart';
@@ -211,12 +212,26 @@ class AddExpenseScreen extends StatelessWidget {
                     context.read<DropdownProvider>().selectedValue1.isEmpty ||
                     context.read<DropdownProvider>().selectedValue2.isEmpty) {
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Please fill all the fields'),
-                      backgroundColor: Colors.red,
+                  Flushbar(
+                     messageText: Text(
+                    "Please fill all the fields!",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                  );
+                  ),
+                    icon: Icon(
+                      Icons.error_outline,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    duration: Duration(seconds: 2),
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    borderRadius: BorderRadius.circular(12),
+                    backgroundColor: Colors.red,
+                    flushbarPosition: FlushbarPosition.TOP,
+                  ).show(context);
                   return;
                 }
 
@@ -235,15 +250,24 @@ class AddExpenseScreen extends StatelessWidget {
                   amountType: amountType,
                   date: date,
                 );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Expense Added Successfully!'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-
                 context.read<AddExpenseProvider>().resetExpenseAddedFlag();
                 Navigator.pop(context);
+                Flushbar(
+                  messageText: Text(
+                    "Expense added successfully!",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  duration: Duration(seconds: 10),
+                  margin: EdgeInsets.all(16),
+                  borderRadius: BorderRadius.circular(12),
+                  backgroundColor: Colors.green,
+                  icon: Icon(Icons.check_circle, color: Colors.white),
+                  flushbarPosition: FlushbarPosition.TOP,
+                ).show(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue.shade700,
