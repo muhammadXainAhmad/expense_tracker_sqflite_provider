@@ -1,6 +1,5 @@
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/add_expense_provider.dart';
-import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
