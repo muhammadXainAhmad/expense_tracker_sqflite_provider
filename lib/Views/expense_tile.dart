@@ -67,8 +67,6 @@ class ExpenseTile extends StatelessWidget {
       ),
     );
 
-    if (!enableDismissible) return tile;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       child: Card(

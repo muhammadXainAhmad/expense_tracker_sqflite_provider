@@ -1,6 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
-import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/category_expense_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -75,7 +75,11 @@ class CategoryScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
                           onTap: () {
-                            Navigator.pushNamed(context, ExpenseScreen.name);
+                            Navigator.pushNamed(
+                              context,
+                              CategoryExpenseScreen.name,
+                              arguments: category.title,
+                            );
                           },
                           leading: Stack(
                             alignment: Alignment.center,
