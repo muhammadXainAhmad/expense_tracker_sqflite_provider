@@ -15,32 +15,33 @@ class AddExpenseScreen extends StatefulWidget {
 }
 
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
-  late TextEditingController titleController;
-  late TextEditingController amountController;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
   @override
   void initState() {
     super.initState();
 
-    final expenseProvider = context.read<ExpenseProvider>();
-    final dropdownProvider = context.read<DropdownProvider>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final expenseProvider = context.read<ExpenseProvider>();
+      final dropdownProvider = context.read<DropdownProvider>();
 
-    titleController = TextEditingController();
-    amountController = TextEditingController();
+      if (expenseProvider.isUpdate) {
+        titleController.text = expenseProvider.updateTitle!;
+        amountController.text = expenseProvider.updateAmount.toString();
 
-    if (expenseProvider.isUpdate) {
-      titleController.text = expenseProvider.updateTitle!;
-      amountController.text = expenseProvider.updateAmount.toString();
+        dropdownProvider.updateSelectedValue1(
+          expenseProvider.updateAmountType!,
+        );
 
-      dropdownProvider.updateSelectedValue1(expenseProvider.updateAmountType!);
+        dropdownProvider.updateSelectedValue2(expenseProvider.updateCategory!);
 
-      dropdownProvider.updateSelectedValue2(expenseProvider.updateCategory!);
-
-      if (expenseProvider.updateDate != null) {
-        expenseProvider.updateSelectedDate(expenseProvider.updateDate!);
+        if (expenseProvider.updateDate != null) {
+          expenseProvider.updateSelectedDate(expenseProvider.updateDate!);
+        }
+      } else {
+        expenseProvider.updateSelectedDate(DateTime.now());
       }
-    } else {
-      expenseProvider.updateSelectedDate(DateTime.now());
-    }
+    });
   }
 
   @override
