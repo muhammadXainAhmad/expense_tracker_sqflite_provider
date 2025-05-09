@@ -10,14 +10,14 @@ class ExpenseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AddExpenseProvider>().getExpense();
+      context.read<ExpenseProvider>().getExpense();
     });
     return Scaffold(
       appBar: AppBar(title: Text("Expense Screen")),
       body: Center(
         child: Column(
           children: [
-            Consumer<AddExpenseProvider>(
+            Consumer<ExpenseProvider>(
               builder: (context, provider, child) {
                 return provider.expenseList.isEmpty
                     ? Center(child: Text("No expenses found!"))
@@ -62,13 +62,15 @@ class ExpenseScreen extends StatelessWidget {
                                   alignment: Alignment.centerRight,
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 15.0),
-                                    child: Icon(Icons.edit, color: Colors.white),
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                                 onDismissed: (direction) {
                                   if (direction ==
                                       DismissDirection.startToEnd) {
-                                    // delete
                                   } else {
                                     // edit
                                   }

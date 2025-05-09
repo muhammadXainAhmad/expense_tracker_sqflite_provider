@@ -142,7 +142,7 @@ class AddExpenseScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: SizedBox(
             width: 250,
-            child: Consumer<AddExpenseProvider>(
+            child: Consumer<ExpenseProvider>(
               builder: (context, provider, child) {
                 return TextField(
                   controller: amountContoller,
@@ -214,7 +214,7 @@ class AddExpenseScreen extends StatelessWidget {
           ),
         ),
 
-        Consumer<AddExpenseProvider>(
+        Consumer<ExpenseProvider>(
           builder: (context, provider, child) {
             return SizedBox(
               width: 340,
@@ -304,16 +304,16 @@ class AddExpenseScreen extends StatelessWidget {
               final category = context.read<DropdownProvider>().selectedValue2;
               final amountType =
                   context.read<DropdownProvider>().selectedValue1;
-              final date = context.read<AddExpenseProvider>().selectedDate;
+              final date = context.read<ExpenseProvider>().selectedDate;
 
-              context.read<AddExpenseProvider>().addExpenseItem(
+              context.read<ExpenseProvider>().addExpenseItem(
                 title: title,
                 amount: amount,
                 category: category,
                 amountType: amountType,
                 date: date,
               );
-              context.read<AddExpenseProvider>().resetExpenseAddedFlag();
+              context.read<ExpenseProvider>().resetExpenseAddedFlag();
               Navigator.pop(context);
               Flushbar(
                 messageText: Text(
