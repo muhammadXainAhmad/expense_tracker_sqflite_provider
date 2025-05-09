@@ -62,9 +62,40 @@ class ExpenseProvider with ChangeNotifier {
 
   bool _isUpdate = false;
   bool get isUpdate => _isUpdate;
+  int? _updateId;
+  int? get updateId => _updateId;
 
-  void setUpdateFlag(bool value) {
+  String? _updateTitle;
+  String? get updateTitle => _updateTitle;
+
+  double? _updateAmount;
+  double? get updateAmount => _updateAmount;
+
+  String? _updateCategory;
+  String? get updateCategory => _updateCategory;
+
+  String? _updateAmountType;
+  String? get updateAmountType => _updateAmountType;
+
+  DateTime? _updateDate;
+  DateTime? get updateDate => _updateDate;
+
+  void setUpdateFlag(
+    bool value,
+    int id,
+    String title,
+    double amount,
+    String category,
+    String amountType,
+    DateTime date,
+  ) {
     _isUpdate = value;
+    _updateId = id;
+    _updateTitle = title;
+    _updateAmount = amount;
+    _updateCategory = category;
+    _updateAmountType = amountType;
+    _updateDate = date;
     notifyListeners();
   }
 
@@ -85,10 +116,13 @@ class ExpenseProvider with ChangeNotifier {
       type: amountType,
     );
     await dbHelper.updateExpenseItem(expense);
+    getExpense();
+    notifyListeners();
   }
 
   void deleteExpenseItem(int id) async {
     await dbHelper.deleteExpenseItem(id);
     getExpense();
+    notifyListeners();
   }
 }

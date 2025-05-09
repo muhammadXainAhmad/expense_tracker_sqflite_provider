@@ -7,14 +7,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class AddExpenseScreen extends StatelessWidget {
+class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController amountContoller = TextEditingController();
-    final TextEditingController titleController = TextEditingController();
+  State<AddExpenseScreen> createState() => _AddExpenseScreenState();
+}
 
+class _AddExpenseScreenState extends State<AddExpenseScreen> {
+  late TextEditingController titleController;
+  late TextEditingController amountController;
+  @override
+  void initState() {
+    super.initState();
+
+    final expenseProvider = context.read<ExpenseProvider>();
+    final dropdownProvider = context.read<DropdownProvider>();
+
+    titleController = TextEditingController();
+    amountController = TextEditingController();
+
+    if (expenseProvider.isUpdate) {
+      titleController.text = expenseProvider.updateTitle!;
+      amountController.text = expenseProvider.updateAmount.toString();
+
+      dropdownProvider.updateSelectedValue1(expenseProvider.updateAmountType!);
+
+      dropdownProvider.updateSelectedValue2(expenseProvider.updateCategory!);
+
+      if (expenseProvider.updateDate != null) {
+        expenseProvider.updateSelectedDate(expenseProvider.updateDate!);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    amountController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Divider(
@@ -145,11 +180,15 @@ class AddExpenseScreen extends StatelessWidget {
             child: Consumer<ExpenseProvider>(
               builder: (context, provider, child) {
                 return TextField(
-                  controller: amountContoller,
+                  controller: amountController,
                   style: TextStyle(fontSize: 36),
                   textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^\d*\.?\d{0,2}'),
+                    ),
+                  ],
                   decoration: InputDecoration(
                     prefixText: provider.showPrefix ? r"$" : null,
                     prefixStyle: TextStyle(color: Colors.black, fontSize: 32),
@@ -187,7 +226,7 @@ class AddExpenseScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.only(left: 26),
+                  padding: const EdgeInsets.only(left: 24),
                   child: Icon(
                     Icons.notes_outlined,
                     color: Colors.black,
@@ -271,7 +310,7 @@ class AddExpenseScreen extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 40),
           child: ElevatedButton(
             onPressed: () {
-              if (amountContoller.text.isEmpty ||
+              if (amountController.text.isEmpty ||
                   titleController.text.isEmpty ||
                   context.read<DropdownProvider>().selectedValue1.isEmpty ||
                   context.read<DropdownProvider>().selectedValue2.isEmpty) {
@@ -300,24 +339,49 @@ class AddExpenseScreen extends StatelessWidget {
               }
 
               final title = titleController.text;
-              final amount = double.tryParse(amountContoller.text) ?? 0;
+              final amount = double.tryParse(amountController.text) ?? 0;
               final category = context.read<DropdownProvider>().selectedValue2;
               final amountType =
                   context.read<DropdownProvider>().selectedValue1;
               final date = context.read<ExpenseProvider>().selectedDate;
 
-              context.read<ExpenseProvider>().addExpenseItem(
-                title: title,
-                amount: amount,
-                category: category,
-                amountType: amountType,
-                date: date,
+              final expenseProvider = context.read<ExpenseProvider>();
+              final wasUpdate = expenseProvider.isUpdate;
+              if (expenseProvider.isUpdate) {
+                expenseProvider.updateExpenseItem(
+                  id: expenseProvider.updateId!,
+                  title: title,
+                  amount: amount,
+                  category: category,
+                  amountType: amountType,
+                  date: date,
+                );
+              } else {
+                context.read<ExpenseProvider>().addExpenseItem(
+                  title: title,
+                  amount: amount,
+                  category: category,
+                  amountType: amountType,
+                  date: date,
+                );
+              }
+              expenseProvider.setUpdateFlag(
+                false,
+                0,
+                '',
+                0,
+                '',
+                '',
+                DateTime.now(),
               );
-              context.read<ExpenseProvider>().resetExpenseAddedFlag();
+
+              expenseProvider.resetExpenseAddedFlag();
               Navigator.pop(context);
               Flushbar(
                 messageText: Text(
-                  "Expense added successfully!",
+                  wasUpdate
+                      ? "Expense updated successfully!"
+                      : "Expense added successfully!",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -342,7 +406,11 @@ class AddExpenseScreen extends StatelessWidget {
               elevation: 5,
               textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            child: Text("SAVE EXPENSE"),
+            child: Text(
+              context.read<ExpenseProvider>().isUpdate
+                  ? "UPDATE EXPENSE"
+                  : "ADD EXPENSE",
+            ),
           ),
         ),
       ],

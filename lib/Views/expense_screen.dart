@@ -1,5 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,39 +42,65 @@ class ExpenseScreen extends StatelessWidget {
                                 key: ValueKey(expense.id),
                                 background: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-
-                                  alignment: Alignment.centerLeft,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 15),
-                                    child: Icon(
-                                      Icons.delete,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                secondaryBackground: Container(
-                                  decoration: BoxDecoration(
                                     color: Colors.blue,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  alignment: Alignment.centerRight,
+                                  alignment: Alignment.centerLeft,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(right: 15.0),
+                                    padding: const EdgeInsets.only(left: 15.0),
                                     child: Icon(
                                       Icons.edit,
                                       color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                onDismissed: (direction) {
+                                secondaryBackground: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 15),
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                confirmDismiss: (direction) async {
                                   if (direction ==
                                       DismissDirection.startToEnd) {
+                                    provider.setUpdateFlag(
+                                      true,
+                                      expense.id,
+                                      expense.title,
+                                      expense.amount,
+                                      expense.category,
+                                      expense.type,
+                                      expense.date,
+                                    );
+                                    await showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder:
+                                          (context) => SizedBox(
+                                            height:
+                                                MediaQuery.of(
+                                                  context,
+                                                ).size.height *
+                                                0.75,
+                                            child: AddExpenseScreen(),
+                                          ),
+                                    );
+                                    return false;
                                   } else {
-                                    // edit
+                                    return true;
                                   }
+                                },
+                                onDismissed: (direction) {
+                                  provider.deleteExpenseItem(expense.id);
                                 },
                                 child: ListTile(
                                   leading: Stack(
