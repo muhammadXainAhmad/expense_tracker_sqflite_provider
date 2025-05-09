@@ -38,6 +38,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       if (expenseProvider.updateDate != null) {
         expenseProvider.updateSelectedDate(expenseProvider.updateDate!);
       }
+    } else {
+      expenseProvider.updateSelectedDate(DateTime.now());
     }
   }
 
@@ -314,7 +316,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   titleController.text.isEmpty ||
                   context.read<DropdownProvider>().selectedValue1.isEmpty ||
                   context.read<DropdownProvider>().selectedValue2.isEmpty) {
-                Navigator.pop(context);
                 Flushbar(
                   messageText: Text(
                     "Please fill all the fields!",
