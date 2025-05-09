@@ -71,6 +71,16 @@ class DBHelper {
     db.insert(eTableName, expense.toMap());
   }
 
+  Future<void> updateExpenseItem(Expense expense) async {
+    var db = await getDB();
+    db.update(
+      eTableName,
+      expense.toMap(),
+      where: 'id = ?',
+      whereArgs: [expense.id],
+    );
+  }
+
   Future<void> deleteExpenseItem(int id) async {
     var db = await getDB();
     db.delete(eTableName, where: 'id = ?', whereArgs: [id]);

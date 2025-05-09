@@ -60,7 +60,32 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateExpenseItem() async {}
+  bool _isUpdate = false;
+  bool get isUpdate => _isUpdate;
+
+  void setUpdateFlag(bool value) {
+    _isUpdate = value;
+    notifyListeners();
+  }
+
+  void updateExpenseItem({
+    required int id,
+    required String title,
+    required double amount,
+    required String category,
+    required String amountType,
+    required DateTime date,
+  }) async {
+    final expense = Expense(
+      id: id,
+      title: title,
+      amount: amount,
+      date: date,
+      category: category,
+      type: amountType,
+    );
+    await dbHelper.updateExpenseItem(expense);
+  }
 
   void deleteExpenseItem(int id) async {
     await dbHelper.deleteExpenseItem(id);
