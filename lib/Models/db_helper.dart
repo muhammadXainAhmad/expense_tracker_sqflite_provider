@@ -24,7 +24,7 @@ class DBHelper {
   static final String eAmount = "amount";
   static final String eDate = "date";
   static final String eCategory = "category";
-  static final String eType="type";
+  static final String eType = "type";
 
   Database? _myDB;
 
@@ -69,5 +69,10 @@ class DBHelper {
   Future<void> addExpenseItem(Expense expense) async {
     var db = await getDB();
     db.insert(eTableName, expense.toMap());
+  }
+
+  Future<void> deleteExpenseItem(int id) async {
+    var db = await getDB();
+    db.delete(eTableName, where: 'id = ?', whereArgs: [id]);
   }
 }

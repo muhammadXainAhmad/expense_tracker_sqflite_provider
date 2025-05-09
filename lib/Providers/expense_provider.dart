@@ -2,7 +2,7 @@ import 'package:expense_tracker_sqflite_provider/Models/db_helper.dart';
 import 'package:expense_tracker_sqflite_provider/Models/expense_model.dart';
 import 'package:flutter/material.dart';
 
-class AddExpenseProvider with ChangeNotifier {
+class ExpenseProvider with ChangeNotifier {
   DBHelper dbHelper = DBHelper.instance;
 
   bool _showPrefix = false;
@@ -23,6 +23,21 @@ class AddExpenseProvider with ChangeNotifier {
 
   bool _isExpenseAdded = false;
   bool get isExpenseAdded => _isExpenseAdded;
+
+  void resetExpenseAddedFlag() {
+    _isExpenseAdded = false;
+    notifyListeners();
+  }
+
+  List<Expense> _expenseList = [];
+  List<Expense> get expenseList => _expenseList;
+
+  void getExpense() async {
+    List<Expense> expenses = await dbHelper.getExpense();
+    expenses.sort((a, b) => b.date.compareTo(a.date));
+    _expenseList = expenses;
+    notifyListeners();
+  }
 
   void addExpenseItem({
     required String title,
@@ -45,18 +60,10 @@ class AddExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void resetExpenseAddedFlag() {
-    _isExpenseAdded = false;
-    notifyListeners();
-  }
+  void updateExpenseItem() async {}
 
-  List<Expense> _expenseList = [];
-  List<Expense> get expenseList => _expenseList;
-
-  void getExpense() async {
-    List<Expense> expenses = await dbHelper.getExpense();
-    expenses.sort((a, b) => b.date.compareTo(a.date));
-    _expenseList = expenses;
-    notifyListeners();
+  void deleteExpenseItem(int id) async {
+    await dbHelper.deleteExpenseItem(id);
+    getExpense();
   }
 }
