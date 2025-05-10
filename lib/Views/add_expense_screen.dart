@@ -24,7 +24,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final expenseProvider = context.read<ExpenseProvider>();
       final dropdownProvider = context.read<DropdownProvider>();
-
+      final transactionProvider = context.read<TransactionTypeProvider>();
       if (expenseProvider.isUpdate) {
         titleController.text = expenseProvider.updateTitle!;
         amountController.text = expenseProvider.updateAmount.toString();
@@ -34,7 +34,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         );
 
         dropdownProvider.updateSelectedValue2(expenseProvider.updateCategory!);
-
+        transactionProvider.setTransactionType(
+          expenseProvider.transactionType!,
+        );
         if (expenseProvider.updateDate != null) {
           expenseProvider.updateSelectedDate(expenseProvider.updateDate!);
         }
@@ -82,7 +84,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 children: const [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('Expenses', style: TextStyle(fontSize: 18)),
+                    child: Text('Expense', style: TextStyle(fontSize: 18)),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -93,87 +95,99 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             );
           },
         ),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                width: 160,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: Consumer<DropdownProvider>(
-                    builder: (context, dropdownprovider, child) {
-                      return ButtonTheme(
-                        alignedDropdown: true,
-                        child: DropdownButton(
-                          value: dropdownprovider.selectedValue1,
-                          iconEnabledColor: Colors.black,
-                          iconSize: 32,
-                          items: const [
-                            DropdownMenuItem<String>(
-                              value: 'Cash',
-                              alignment: Alignment.center,
-                              child: Text('Cash'),
-                            ),
-                            DropdownMenuItem<String>(
-                              value: 'Card',
-                              alignment: Alignment.center,
-                              child: Text('Card'),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            if (value != null) {
-                              dropdownprovider.updateSelectedValue1(value);
-                            }
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                width: 160,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade100,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: Consumer2<CategoryProvider, DropdownProvider>(
-                    builder: (context, categoryprovider, dropprovider, child) {
-                      return ButtonTheme(
-                        alignedDropdown: true,
-                        child: DropdownButton(
-                          value: dropprovider.selectedValue2,
-                          iconEnabledColor: Colors.black,
-                          iconSize: 32,
-                          items:
-                              categoryprovider.categories.map((category) {
-                                return DropdownMenuItem<String>(
-                                  value: category.title,
+        Consumer<TransactionTypeProvider>(
+          builder: (context, transactionprovider, child) {
+            if (transactionprovider.transactionType == "Income") {
+              return SizedBox.shrink();
+            }
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 160,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: Consumer<DropdownProvider>(
+                        builder: (context, dropdownprovider, child) {
+                          return ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton(
+                              value: dropdownprovider.selectedValue1,
+                              iconEnabledColor: Colors.black,
+                              iconSize: 32,
+                              items: const [
+                                DropdownMenuItem<String>(
+                                  value: 'Cash',
                                   alignment: Alignment.center,
-                                  child: Text(category.title),
-                                );
-                              }).toList(),
-                          onChanged: (value) {
-                            if (value != null) {
-                              dropprovider.updateSelectedValue2(value);
-                            }
-                          },
-                        ),
-                      );
-                    },
+                                  child: Text('Cash'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'Card',
+                                  alignment: Alignment.center,
+                                  child: Text('Card'),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                if (value != null) {
+                                  dropdownprovider.updateSelectedValue1(value);
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  Container(
+                    width: 160,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: Consumer2<CategoryProvider, DropdownProvider>(
+                        builder: (
+                          context,
+                          categoryprovider,
+                          dropprovider,
+                          child,
+                        ) {
+                          return ButtonTheme(
+                            alignedDropdown: true,
+                            child: DropdownButton(
+                              value: dropprovider.selectedValue2,
+                              iconEnabledColor: Colors.black,
+                              iconSize: 32,
+                              items:
+                                  categoryprovider.categories.map((category) {
+                                    return DropdownMenuItem<String>(
+                                      value: category.title,
+                                      alignment: Alignment.center,
+                                      child: Text(category.title),
+                                    );
+                                  }).toList(),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  dropprovider.updateSelectedValue2(value);
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
 
         Padding(
@@ -313,10 +327,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           padding: const EdgeInsets.only(bottom: 40),
           child: ElevatedButton(
             onPressed: () {
+              final transactionType =
+                  context.read<TransactionTypeProvider>().transactionType;
+              final dropdownProvider = context.read<DropdownProvider>();
               if (amountController.text.isEmpty ||
                   titleController.text.isEmpty ||
-                  context.read<DropdownProvider>().selectedValue1.isEmpty ||
-                  context.read<DropdownProvider>().selectedValue2.isEmpty) {
+                  (transactionType == 'Expense' &&
+                      (dropdownProvider.selectedValue1.isEmpty ||
+                          dropdownProvider.selectedValue2.isEmpty))) {
                 Flushbar(
                   messageText: Text(
                     "Please fill all the fields!",
@@ -342,12 +360,15 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
               final title = titleController.text;
               final amount = double.tryParse(amountController.text) ?? 0;
-              final category = context.read<DropdownProvider>().selectedValue2;
-              final paymentType =
-                  context.read<DropdownProvider>().selectedValue1;
               final date = context.read<ExpenseProvider>().selectedDate;
-              final transactionType =
-                  context.read<TransactionTypeProvider>().transactionType;
+              final category =
+                  transactionType == 'Expense'
+                      ? context.read<DropdownProvider>().selectedValue2
+                      : "";
+              final paymentType =
+                  transactionType == "Expense"
+                      ? context.read<DropdownProvider>().selectedValue1
+                      : "";
               final expenseProvider = context.read<ExpenseProvider>();
               final wasUpdate = expenseProvider.isUpdate;
               if (expenseProvider.isUpdate) {

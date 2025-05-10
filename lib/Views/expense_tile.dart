@@ -26,10 +26,11 @@ class ExpenseTile extends StatelessWidget {
           Icon(
             Icons.circle,
             size: 50,
-            color: categoryColors[expense.category] ?? Colors.grey,
+            color:
+                categoryColors[expense.category] ?? Colors.greenAccent.shade400,
           ),
           Icon(
-            icons[expense.category] ?? Icons.category,
+            icons[expense.category] ?? Icons.money_outlined,
             size: 26,
             color: Colors.black,
           ),
@@ -44,7 +45,7 @@ class ExpenseTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        "${expense.paymentType} · ${expense.category}",
+        "${expense.paymentType} · ${expense.category}· ${expense.transactionType}",
         style: const TextStyle(color: Colors.black, fontSize: 14),
       ),
       trailing: Column(
@@ -52,9 +53,12 @@ class ExpenseTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            "- \$${expense.amount}",
-            style: const TextStyle(
-              color: Colors.red,
+            "${expense.transactionType == 'Expense' ? '- ' : '+ '}\$${expense.amount}",
+            style: TextStyle(
+              color:
+                  expense.transactionType == 'Expense'
+                      ? Colors.red
+                      : Colors.greenAccent.shade400,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
@@ -72,7 +76,7 @@ class ExpenseTile extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 2,
-        color: Colors.tealAccent.shade200,
+        color: Colors.white,
         child: Dismissible(
           key: ValueKey(expense.id),
           background: Container(
