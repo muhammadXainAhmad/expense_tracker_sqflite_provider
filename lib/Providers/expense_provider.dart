@@ -29,13 +29,19 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   List<Expense> _expenseList = [];
   List<Expense> get expenseList => _expenseList;
 
   void getExpense() async {
+    _isLoading = true;
+    notifyListeners();
     List<Expense> expenses = await dbHelper.getExpense();
     expenses.sort((a, b) => b.date.compareTo(a.date));
     _expenseList = expenses;
+    _isLoading = false;
     notifyListeners();
   }
 
