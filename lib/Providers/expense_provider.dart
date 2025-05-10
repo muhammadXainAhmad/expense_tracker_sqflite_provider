@@ -49,8 +49,9 @@ class ExpenseProvider with ChangeNotifier {
     required String title,
     required double amount,
     required String category,
-    required String amountType,
+    required String paymentType,
     required DateTime date,
+    required String transactionType,
   }) async {
     final expense = Expense(
       id: 0,
@@ -58,7 +59,8 @@ class ExpenseProvider with ChangeNotifier {
       amount: amount,
       date: date,
       category: category,
-      type: amountType,
+      paymentType: paymentType,
+      transactionType: transactionType,
     );
     await dbHelper.addExpenseItem(expense);
     getExpense();
@@ -83,6 +85,9 @@ class ExpenseProvider with ChangeNotifier {
   String? _updateAmountType;
   String? get updateAmountType => _updateAmountType;
 
+  String? _transactionType;
+  String? get transactionType => _transactionType;
+
   DateTime? _updateDate;
   DateTime? get updateDate => _updateDate;
 
@@ -93,6 +98,7 @@ class ExpenseProvider with ChangeNotifier {
     double amount,
     String category,
     String amountType,
+    String transactionType,
     DateTime date,
   ) {
     _isUpdate = value;
@@ -101,6 +107,7 @@ class ExpenseProvider with ChangeNotifier {
     _updateAmount = amount;
     _updateCategory = category;
     _updateAmountType = amountType;
+    _transactionType = transactionType;
     _updateDate = date;
     notifyListeners();
   }
@@ -110,7 +117,8 @@ class ExpenseProvider with ChangeNotifier {
     required String title,
     required double amount,
     required String category,
-    required String amountType,
+    required String paymentType,
+    required String transactionType,
     required DateTime date,
   }) async {
     final expense = Expense(
@@ -119,7 +127,8 @@ class ExpenseProvider with ChangeNotifier {
       amount: amount,
       date: date,
       category: category,
-      type: amountType,
+      paymentType: paymentType,
+      transactionType: transactionType,
     );
     await dbHelper.updateExpenseItem(expense);
     getExpense();

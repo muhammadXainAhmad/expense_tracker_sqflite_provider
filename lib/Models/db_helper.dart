@@ -24,7 +24,8 @@ class DBHelper {
   static final String eAmount = "amount";
   static final String eDate = "date";
   static final String eCategory = "category";
-  static final String eType = "type";
+  static final String ePaymentType = "paymentType"; // Card or Card
+  static final String eTransactionType = "transactionType"; // Income or Expense
 
   Database? _myDB;
 
@@ -44,7 +45,7 @@ class DBHelper {
           "create table $cTableName ($cTitle TEXT PRIMARY KEY, $cTotalAmount REAL)",
         );
         await db.execute(
-          "create table $eTableName ($eId INTEGER PRIMARY KEY AUTOINCREMENT,$eTitle TEXT, $eAmount REAL, $eDate TEXT, $eCategory TEXT, $eType TEXT)",
+          "create table $eTableName ($eId INTEGER PRIMARY KEY AUTOINCREMENT,$eTitle TEXT, $eAmount REAL, $eDate TEXT, $eCategory TEXT, $ePaymentType TEXT, $eTransactionType TEXT)",
         );
         for (var title in icons.keys) {
           await db.insert(cTableName, {"title": title, "totalAmount": 0.0});

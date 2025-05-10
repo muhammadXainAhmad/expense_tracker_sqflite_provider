@@ -44,7 +44,7 @@ class ExpenseTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        "${expense.type} · ${expense.category}",
+        "${expense.paymentType} · ${expense.category}",
         style: const TextStyle(color: Colors.black, fontSize: 14),
       ),
       trailing: Column(
@@ -105,7 +105,8 @@ class ExpenseTile extends StatelessWidget {
                 expense.title,
                 expense.amount,
                 expense.category,
-                expense.type,
+                expense.paymentType,
+                expense.transactionType,
                 expense.date,
               );
               await showModalBottomSheet(

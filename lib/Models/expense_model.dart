@@ -4,7 +4,8 @@ class Expense {
   final double amount;
   final DateTime date;
   final String category;
-  final String type;
+  final String paymentType;
+  final String transactionType;
 
   Expense({
     required this.id,
@@ -12,7 +13,8 @@ class Expense {
     required this.amount,
     required this.date,
     required this.category,
-    required this.type
+    required this.paymentType,
+    required this .transactionType
   });
 
   Map<String, dynamic> toMap() => {
@@ -20,7 +22,8 @@ class Expense {
     "amount": amount,
     "date": date.toIso8601String(),
     "category": category,
-    "type":type,
+    "paymentType":paymentType,
+    "transactionType":transactionType
   };
 
   static Expense fromMap(Map<String, dynamic> map) {
@@ -30,7 +33,8 @@ class Expense {
       amount: map["amount"],
       date: DateTime.parse(map["date"]),
       category: map["category"],
-      type: map["type"],
+      paymentType: map["paymentType"],
+      transactionType: map["transactionType"]
     );
   }
 }

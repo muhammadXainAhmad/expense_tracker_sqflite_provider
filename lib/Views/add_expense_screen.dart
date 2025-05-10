@@ -82,7 +82,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 children: const [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text('Expense', style: TextStyle(fontSize: 18)),
+                    child: Text('Expenses', style: TextStyle(fontSize: 18)),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
@@ -343,10 +343,11 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               final title = titleController.text;
               final amount = double.tryParse(amountController.text) ?? 0;
               final category = context.read<DropdownProvider>().selectedValue2;
-              final amountType =
+              final paymentType =
                   context.read<DropdownProvider>().selectedValue1;
               final date = context.read<ExpenseProvider>().selectedDate;
-
+              final transactionType =
+                  context.read<TransactionTypeProvider>().transactionType;
               final expenseProvider = context.read<ExpenseProvider>();
               final wasUpdate = expenseProvider.isUpdate;
               if (expenseProvider.isUpdate) {
@@ -355,16 +356,18 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   title: title,
                   amount: amount,
                   category: category,
-                  amountType: amountType,
+                  paymentType: paymentType,
                   date: date,
+                  transactionType: transactionType,
                 );
               } else {
                 context.read<ExpenseProvider>().addExpenseItem(
                   title: title,
                   amount: amount,
                   category: category,
-                  amountType: amountType,
+                  paymentType: paymentType,
                   date: date,
+                  transactionType: transactionType,
                 );
               }
               expenseProvider.setUpdateFlag(
@@ -372,6 +375,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 0,
                 '',
                 0,
+                '',
                 '',
                 '',
                 DateTime.now(),
