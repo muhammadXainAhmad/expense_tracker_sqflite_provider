@@ -21,13 +21,33 @@ class CategoryExpenseScreen extends StatelessWidget {
       appBar: AppBar(title: Text(categoryTitle)),
       body:
           filteredExpenses.isEmpty
-              ? const Center(child: Text("No expenses in this category"))
-              : ListView.builder(
-                itemCount: filteredExpenses.length,
-                itemBuilder: (context, index) {
-                  final expense = filteredExpenses[index];
-                  return ExpenseTile(expense: expense);
-                },
+              ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.do_not_disturb_alt_outlined,
+                      size: 150,
+                      color: Colors.tealAccent.shade400,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "No Data Available",
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              : Expanded(
+                child: ListView.builder(
+                  itemCount: filteredExpenses.length,
+                  itemBuilder: (context, index) {
+                    final expense = filteredExpenses[index];
+                    return ExpenseTile(expense: expense);
+                  },
+                ),
               ),
     );
   }

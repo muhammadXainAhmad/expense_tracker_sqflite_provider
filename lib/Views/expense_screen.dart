@@ -14,26 +14,38 @@ class ExpenseScreen extends StatelessWidget {
     });
     return Scaffold(
       appBar: AppBar(title: Text("Expense Screen")),
-      body: Center(
-        child: Column(
-          children: [
-            Consumer<ExpenseProvider>(
-              builder: (context, provider, child) {
-                return provider.expenseList.isEmpty
-                    ? Center(child: Text("No expenses found!"))
-                    : Expanded(
-                      child: ListView.builder(
-                        itemCount: provider.expenseList.length,
-                        itemBuilder: (context, index) {
-                          final expense = provider.expenseList[index];
-                          return ExpenseTile(expense: expense);
-                        },
+      body: Consumer<ExpenseProvider>(
+        builder: (context, provider, child) {
+          return provider.expenseList.isEmpty
+              ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.do_not_disturb_alt_outlined,
+                      size: 150,
+                      color: Colors.tealAccent.shade400,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "No Data Available",
+                        style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
-                    );
-              },
-            ),
-          ],
-        ),
+                    ),
+                  ],
+                ),
+              )
+              : Expanded(
+                child: ListView.builder(
+                  itemCount: provider.expenseList.length,
+                  itemBuilder: (context, index) {
+                    final expense = provider.expenseList[index];
+                    return ExpenseTile(expense: expense);
+                  },
+                ),
+              );
+        },
       ),
     );
   }
