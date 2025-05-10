@@ -40,14 +40,12 @@ class CategoryExpenseScreen extends StatelessWidget {
                   ],
                 ),
               )
-              : Expanded(
-                child: ListView.builder(
-                  itemCount: filteredExpenses.length,
-                  itemBuilder: (context, index) {
-                    final expense = filteredExpenses[index];
-                    return ExpenseTile(expense: expense);
-                  },
-                ),
+              : ListView.builder(
+                itemCount: filteredExpenses.length,
+                itemBuilder: (context, index) {
+                  final expense = filteredExpenses[index];
+                  return ExpenseTile(expense: expense);
+                },
               ),
     );
   }
