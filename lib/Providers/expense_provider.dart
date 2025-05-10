@@ -123,6 +123,7 @@ class ExpenseProvider with ChangeNotifier {
   void deleteExpenseItem(int id) async {
     await dbHelper.deleteExpenseItem(id);
     getExpense();
+    expenseList.removeWhere((e) => e.id == id);
     notifyListeners();
   }
 }
