@@ -21,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
             isScrollControlled: true,
             builder:
                 (context) => SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.75,
+                  height: MediaQuery.of(context).size.height * 0.70,
                   child: const AddExpenseScreen(),
                 ),
           );

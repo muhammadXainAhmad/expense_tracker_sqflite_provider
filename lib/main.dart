@@ -6,6 +6,7 @@ import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dar
 import 'package:expense_tracker_sqflite_provider/Views/category_expense_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
       routes: {
         CategoryScreen.name: (context) => const CategoryScreen(),
         ExpenseScreen.name: (context) => const ExpenseScreen(),
-        CategoryExpenseScreen.name:(context)=>const CategoryExpenseScreen()
+        CategoryExpenseScreen.name: (context) => const CategoryExpenseScreen(),
+        SettingsScreen.name: (context) => const SettingsScreen(),
       },
       home: BottomNavBar(),
     );

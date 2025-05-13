@@ -1,6 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
-import 'package:expense_tracker_sqflite_provider/Providers/transaction_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_tile.dart';
+import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +21,17 @@ class ExpenseScreen extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SettingsScreen.name);
+              },
+              icon: Icon(Icons.settings, color: Colors.black, size: 30),
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

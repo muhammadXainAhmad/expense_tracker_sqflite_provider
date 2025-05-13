@@ -2,6 +2,7 @@ import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_expense_screen.dart';
+import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +18,21 @@ class CategoryScreen extends StatelessWidget {
     });
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Column(children: [Text("Welcome")]),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Text("Welcome, Xain!"),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SettingsScreen.name);
+              },
+              icon: Icon(Icons.settings, color: Colors.black, size: 30),
+            ),
+          ),
+        ],
       ),
 
       body: Column(
