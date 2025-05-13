@@ -1,4 +1,5 @@
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/theme_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_tile.dart';
 import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,10 @@ class ExpenseScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Transactions",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: context.read<ThemeProvider>().getTextColor(context),
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -28,7 +32,11 @@ class ExpenseScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, SettingsScreen.name);
               },
-              icon: Icon(Icons.settings, color: Colors.black, size: 30),
+              icon: Icon(
+                Icons.settings,
+                color: context.read<ThemeProvider>().getTextColor(context),
+                size: 30,
+              ),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Models/expense_model.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/theme_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +24,14 @@ class CategoryExpenseScreen extends StatelessWidget {
         title: Text(
           categoryTitle,
           style: TextStyle(
-            color: Colors.black,
+            color: context.read<ThemeProvider>().getTextColor(context),
             fontSize: 24,
             fontWeight: FontWeight.w500,
           ),
+        ),
+        iconTheme: IconThemeData(
+          color: context.read<ThemeProvider>().getTextColor(context),
+          size: 30,
         ),
       ),
       body:
@@ -44,7 +49,12 @@ class CategoryExpenseScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "No Data Available",
-                        style: TextStyle(color: Colors.black, fontSize: 18),
+                        style: TextStyle(
+                          color: context.read<ThemeProvider>().getTextColor(
+                            context,
+                          ),
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/theme_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_expense_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,10 @@ class CategoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: Padding(
           padding: const EdgeInsets.only(left: 16.0),
-          child: Text("Welcome, Xain!"),
+          child: Text(
+            "Welcome, Xain!",
+            style: TextStyle(color: context.read<ThemeProvider>().getTextColor(context), fontSize: 24),
+          ),
         ),
         actions: [
           Padding(
@@ -29,7 +33,11 @@ class CategoryScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, SettingsScreen.name);
               },
-              icon: Icon(Icons.settings, color: Colors.black, size: 30),
+              icon: Icon(
+                Icons.settings,
+               color: context.read<ThemeProvider>().getTextColor(context),
+                size: 30,
+              ),
             ),
           ),
         ],
@@ -269,17 +277,28 @@ class CategoryScreen extends StatelessWidget {
                         title: Text(
                           category.title,
                           style: TextStyle(
+                            color: context.read<ThemeProvider>().getTextColor(
+                              context,
+                            ),
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
                         ),
                         subtitle: Text(
                           "Transactions: $expenseCount",
-                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          style: TextStyle(
+                            color: context.read<ThemeProvider>().getTextColor(
+                              context,
+                            ),
+                            fontSize: 14,
+                          ),
                         ),
                         trailing: Text(
                           "\$${categoryTotal.toStringAsFixed(2)}",
                           style: TextStyle(
+                            color: context.read<ThemeProvider>().getTextColor(
+                              context,
+                            ),
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),

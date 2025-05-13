@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/category_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/drop_down_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/theme_provider.dart';
 import 'package:expense_tracker_sqflite_provider/Providers/transaction_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +59,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     return Column(
       children: [
         Divider(
-          color: Colors.black,
+          color: context.read<ThemeProvider>().getTextColor(context),
           thickness: 6,
           indent: 190,
           endIndent: 190,
@@ -129,6 +130,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           return ButtonTheme(
                             alignedDropdown: true,
                             child: DropdownButton(
+                              dropdownColor: Colors.white,
                               value: dropdownprovider.selectedValue1,
                               iconEnabledColor: Colors.black,
                               iconSize: 32,
@@ -136,12 +138,18 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                 DropdownMenuItem<String>(
                                   value: 'Cash',
                                   alignment: Alignment.center,
-                                  child: Text('Cash'),
+                                  child: Text(
+                                    'Cash',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                                 DropdownMenuItem<String>(
                                   value: 'Card',
                                   alignment: Alignment.center,
-                                  child: Text('Card'),
+                                  child: Text(
+                                    'Card',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                               ],
                               onChanged: (value) {
@@ -173,6 +181,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           return ButtonTheme(
                             alignedDropdown: true,
                             child: DropdownButton(
+                              dropdownColor: Colors.white,
                               value: dropprovider.selectedValue2,
                               iconEnabledColor: Colors.black,
                               iconSize: 32,
@@ -181,7 +190,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                                     return DropdownMenuItem<String>(
                                       value: category.title,
                                       alignment: Alignment.center,
-                                      child: Text(category.title),
+                                      child: Text(
+                                        category.title,
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                     );
                                   }).toList(),
                               onChanged: (value) {
@@ -209,7 +221,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               builder: (context, provider, child) {
                 return TextField(
                   controller: amountController,
-                  style: TextStyle(fontSize: 36),
+                  style: TextStyle(fontSize: 36, color: Colors.black),
                   textAlign: TextAlign.center,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
@@ -221,7 +233,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     prefixText: provider.showPrefix ? r"$" : null,
                     prefixStyle: TextStyle(color: Colors.black, fontSize: 32),
                     hintText: r"$0",
-                    hintStyle: TextStyle(fontSize: 32),
+                    hintStyle: TextStyle(fontSize: 32, color: Colors.black),
                     filled: true,
                     fillColor: Colors.blue.shade100,
                     enabledBorder: OutlineInputBorder(
