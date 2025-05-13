@@ -35,17 +35,48 @@ class ExpenseProvider with ChangeNotifier {
   List<Expense> _expenseList = [];
   List<Expense> get expenseList => _expenseList;
 
-  void getExpense() async {
+  double _totalIncome = 0;
+  double get totalIncome => _totalIncome;
+
+  double _totalExpense = 0;
+  double get totalExpense => _totalExpense;
+
+  Map<String, double> _categoryExpenseTotals = {};
+  Map<String, double> get categoryExpenseTotals => _categoryExpenseTotals;
+
+  double _balance = 0;
+  double get balance => _balance;
+
+  Future<void> getExpense() async {
     _isLoading = true;
     notifyListeners();
     List<Expense> expenses = await dbHelper.getExpense();
     expenses.sort((a, b) => b.date.compareTo(a.date));
     _expenseList = expenses;
+
+    _totalIncome = 0;
+    _totalExpense = 0;
+    _categoryExpenseTotals = {};
+    _balance = 0;
+    for (var expense in expenses) {
+      if (expense.transactionType == "Income") {
+        _totalIncome += expense.amount;
+      } else {
+        _totalExpense += expense.amount;
+        _categoryExpenseTotals.update(
+          expense.category,
+          (existing) => existing + expense.amount,
+          ifAbsent: () => expense.amount,
+        );
+      }
+    }
+    _balance = _totalIncome - _totalExpense;
+
     _isLoading = false;
     notifyListeners();
   }
 
-  void addExpenseItem({
+  Future<void> addExpenseItem({
     required String title,
     required double amount,
     required String category,
@@ -112,7 +143,7 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateExpenseItem({
+  Future<void> updateExpenseItem({
     required int id,
     required String title,
     required double amount,
@@ -135,7 +166,7 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteExpenseItem(int id) async {
+  Future<void> deleteExpenseItem(int id) async {
     await dbHelper.deleteExpenseItem(id);
     getExpense();
     expenseList.removeWhere((e) => e.id == id);

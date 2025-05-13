@@ -42,15 +42,25 @@ class CategoryScreen extends StatelessWidget {
                       "Total Balance",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    Text(
-                      r"$ 32,500",
-                      style: TextStyle(color: Colors.white, fontSize: 38),
+                    Consumer<ExpenseProvider>(
+                      builder: (context, provider, child) {
+                        return Text(
+                          "\$ ${provider.balance.toStringAsFixed(2)}",
+                          style: TextStyle(color: Colors.white, fontSize: 38),
+                        );
+                      },
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("Income", style: TextStyle(color: Colors.white)),
-                        Text("Expenses", style: TextStyle(color: Colors.white)),
+                        Text(
+                          'Total Income: \$${context.read<ExpenseProvider>().totalIncome.toStringAsFixed(2)}',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Text(
+                          "Total Expenses: \$${context.read<ExpenseProvider>().totalExpense.toStringAsFixed(2)}",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                   ],
@@ -94,8 +104,8 @@ class CategoryScreen extends StatelessWidget {
             ],
           ),
           Expanded(
-            child: Consumer<CategoryProvider>(
-              builder: (context, categoryProvider, child) {
+            child: Consumer2<ExpenseProvider, CategoryProvider>(
+              builder: (context, expenseProvider, categoryProvider, child) {
                 if (categoryProvider.isLoading) {
                   return Center(child: CircularProgressIndicator());
                 }
@@ -104,6 +114,9 @@ class CategoryScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final category = categoryProvider.categories[index];
                     final expenseCount = category.entries;
+                    final categoryTotal =
+                        expenseProvider.categoryExpenseTotals[category.title] ??
+                        0;
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
@@ -144,7 +157,7 @@ class CategoryScreen extends StatelessWidget {
                           style: TextStyle(color: Colors.black, fontSize: 14),
                         ),
                         trailing: Text(
-                          '\$${category.totalAmount}',
+                          "\$${categoryTotal.toStringAsFixed(2)}",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

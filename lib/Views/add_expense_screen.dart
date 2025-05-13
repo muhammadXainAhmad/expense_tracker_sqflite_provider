@@ -249,6 +249,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
           child: SizedBox(
             width: 340,
             child: TextField(
+              textCapitalization: TextCapitalization.sentences,
               controller: titleController,
               style: TextStyle(color: Colors.black, fontSize: 18),
               textAlign: TextAlign.center,
