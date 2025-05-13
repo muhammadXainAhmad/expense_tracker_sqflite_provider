@@ -18,15 +18,12 @@ class CategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Column(children: [Text(r"$32,500.00"), Text("Total Balance")]),
-        actions: [Icon(Icons.notifications_none_rounded, size: 30)],
+        title: Column(children: [Text("Welcome")]),
       ),
 
       body: Column(
         children: [
           SizedBox(
-            width: double.infinity,
-            height: 200,
             child: Card(
               margin: EdgeInsets.all(32),
               shape: RoundedRectangleBorder(
@@ -35,7 +32,7 @@ class CategoryScreen extends StatelessWidget {
               elevation: 2,
               color: Colors.blue.shade900,
               child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.all(20),
                 child: Consumer<ExpenseProvider>(
                   builder: (context, provider, child) {
                     return Column(
@@ -46,20 +43,83 @@ class CategoryScreen extends StatelessWidget {
                         ),
                         Text(
                           "\$ ${provider.balance.toStringAsFixed(2)}",
-                          style: TextStyle(color: Colors.white, fontSize: 38),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 38,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              'Total Income: \$${provider.totalIncome.toStringAsFixed(2)}',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              "Total Expenses: \$${provider.totalExpense.toStringAsFixed(2)}",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_circle_down_rounded,
+                                    size: 40,
+                                    color: Colors.greenAccent.shade400,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Income",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        provider.totalIncome.toStringAsFixed(2),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_circle_up_rounded,
+                                    size: 40,
+                                    color: Colors.red,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Expense",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        provider.totalExpense.toStringAsFixed(
+                                          2,
+                                        ),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     );

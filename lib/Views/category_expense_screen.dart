@@ -18,7 +18,17 @@ class CategoryExpenseScreen extends StatelessWidget {
             .where((e) => e.category == categoryTitle)
             .toList();
     return Scaffold(
-      appBar: AppBar(title: Text(categoryTitle)),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          categoryTitle,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
       body:
           filteredExpenses.isEmpty
               ? Center(
