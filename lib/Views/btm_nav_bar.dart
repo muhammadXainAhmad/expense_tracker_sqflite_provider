@@ -1,7 +1,6 @@
 import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/category_screen.dart';
 import 'package:expense_tracker_sqflite_provider/Views/expense_screen.dart';
-import 'package:expense_tracker_sqflite_provider/Views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,11 +9,7 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> pages = [
-      CategoryScreen(),
-      ExpenseScreen(),
-      SettingsScreen(),
-    ];
+    final List<Widget> pages = [CategoryScreen(), ExpenseScreen()];
     final navProvider = Provider.of<BottomNavProvider>(context);
 
     return Scaffold(
@@ -41,10 +36,10 @@ class BottomNavBar extends StatelessWidget {
         notchMargin: 6.0,
         color: Colors.blue.shade900,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 75,
+              width: 150,
               height: 120,
               child: IconButton(
                 icon: Icon(
@@ -58,8 +53,9 @@ class BottomNavBar extends StatelessWidget {
                 onPressed: () => navProvider.updateIndex(0),
               ),
             ),
+            SizedBox(width: 30),
             SizedBox(
-              width: 75,
+              width: 150,
               height: 120,
               child: IconButton(
                 icon: Icon(
@@ -71,23 +67,6 @@ class BottomNavBar extends StatelessWidget {
                           : Colors.white30,
                 ),
                 onPressed: () => navProvider.updateIndex(1),
-              ),
-            ),
-            SizedBox(width: 50),
-            SizedBox(
-              width: 150,
-              height: 120,
-
-              child: IconButton(
-                icon: Icon(
-                  Icons.settings,
-                  size: 32,
-                  color:
-                      navProvider.selectedIndex == 2
-                          ? Colors.white
-                          : Colors.white30,
-                ),
-                onPressed: () => navProvider.updateIndex(2),
               ),
             ),
           ],
