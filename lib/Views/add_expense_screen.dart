@@ -77,6 +77,17 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   provider.setTransactionType(
                     index == 0 ? 'Expense' : 'Income',
                   );
+                  final dropdown = context.read<DropdownProvider>();
+                  final categoryProvider = context.read<CategoryProvider>();
+
+                  if (index == 0) {
+                    dropdown.updateSelectedValue1('Cash');
+                    if (categoryProvider.categories.isNotEmpty) {
+                      dropdown.updateSelectedValue2(
+                        categoryProvider.categories.first.title,
+                      );
+                    }
+                  }
                 },
                 borderRadius: BorderRadius.circular(12),
                 selectedColor: Colors.white,
