@@ -13,6 +13,7 @@ class ExpenseScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ExpenseProvider>().getExpense();
     });
+    final types = ["Expense", "Income"];
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -23,18 +24,22 @@ class ExpenseScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Consumer<TransactionTypeProvider>(
+          Consumer<ExpenseProvider>(
             builder: (context, provider, child) {
               return Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: ToggleButtons(
                   isSelected: [
-                    provider.transactionType == 'Expense',
-                    provider.transactionType == 'Income',
+                    provider.filterTransactionType == 'Expense',
+                    provider.filterTransactionType == 'Income',
                   ],
                   onPressed: (index) {
-                    provider.setTransactionType(
+                    provider.setFilterTransactionType(
                       index == 0 ? 'Expense' : 'Income',
+                    );
+                    final selectedType = types[index];
+                    context.read<ExpenseProvider>().setSelectedType(
+                      selectedType,
                     );
                   },
                   borderRadius: BorderRadius.circular(12),
@@ -44,7 +49,7 @@ class ExpenseScreen extends StatelessWidget {
                   children: const [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 55),
-                      child: Text('Expenses', style: TextStyle(fontSize: 18)),
+                      child: Text('Expense', style: TextStyle(fontSize: 18)),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 55),
@@ -57,13 +62,17 @@ class ExpenseScreen extends StatelessWidget {
           ),
           Consumer<ExpenseProvider>(
             builder: (context, provider, child) {
+              final filteredList =
+                  context.read<ExpenseProvider>().filteredExpenses;
+
               if (provider.isLoading) {
                 return Center(child: CircularProgressIndicator());
               }
               return provider.expenseList.isEmpty
                   ? Expanded(
                     child: Center(
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.do_not_disturb_alt_outlined,
@@ -74,7 +83,10 @@ class ExpenseScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               "No Data Available",
-                              style: TextStyle(color: Colors.black, fontSize: 18),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ],
@@ -83,9 +95,9 @@ class ExpenseScreen extends StatelessWidget {
                   )
                   : Expanded(
                     child: ListView.builder(
-                      itemCount: provider.expenseList.length,
+                      itemCount: filteredList.length,
                       itemBuilder: (context, index) {
-                        final expense = provider.expenseList[index];
+                        final expense = filteredList[index];
                         return ExpenseTile(expense: expense);
                       },
                     ),

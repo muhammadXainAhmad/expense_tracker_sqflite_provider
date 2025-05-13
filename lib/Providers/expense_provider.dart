@@ -76,6 +76,28 @@ class ExpenseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  String _selectedType = "Expense";
+  String get selectedType => _selectedType;
+
+  void setSelectedType(String type) {
+    _selectedType = type;
+    notifyListeners();
+  }
+
+  List<Expense> get filteredExpenses {
+    return _expenseList
+        .where((e) => e.transactionType == _selectedType)
+        .toList();
+  }
+
+  String _filterTransactionType = 'Expense';
+  String get filterTransactionType => _filterTransactionType;
+
+  void setFilterTransactionType(String type) {
+    _filterTransactionType = type;
+    notifyListeners();
+  }
+
   Future<void> addExpenseItem({
     required String title,
     required double amount,
