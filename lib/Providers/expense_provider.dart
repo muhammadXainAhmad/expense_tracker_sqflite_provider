@@ -194,4 +194,39 @@ class ExpenseProvider with ChangeNotifier {
     expenseList.removeWhere((e) => e.id == id);
     notifyListeners();
   }
+
+  List<Expense> getTodayExpenses() {
+    final now = DateTime.now();
+    return expenseList.where((expense) {
+      return expense.date.year == now.year &&
+          expense.date.month == now.month &&
+          expense.date.day == now.day &&
+          expense.transactionType == "Expense";
+    }).toList();
+  }
+
+  List<Expense> getWeekExpenses() {
+    final now = DateTime.now();
+    final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+    final endOfWeek = startOfWeek.add(Duration(days: 6));
+
+    return expenseList.where((expense) {
+      return expense.date.isAfter(startOfWeek.subtract(Duration(days: 1))) &&
+          expense.date.isBefore(endOfWeek.add(Duration(days: 1))) &&
+          expense.transactionType == "Expense";
+    }).toList();
+  }
+
+  List<Expense> getMonthExpenses() {
+    final now = DateTime.now();
+    return expenseList.where((expense) {
+      return expense.date.year == now.year &&
+          expense.date.month == now.month &&
+          expense.transactionType == "Expense";
+    }).toList();
+  }
+
+  double getTotal(List<Expense> expenses) {
+    return expenses.fold(0, (sum, item) => sum + item.amount);
+  }
 }
