@@ -103,6 +103,7 @@ class CategoryScreen extends StatelessWidget {
                   itemCount: categoryProvider.categories.length,
                   itemBuilder: (context, index) {
                     final category = categoryProvider.categories[index];
+                    final expenseCount = category.entries;
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
@@ -135,6 +136,12 @@ class CategoryScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
+                        ),
+                        subtitle: Text(
+                          expenseCount == 1
+                              ? "$expenseCount transaction"
+                              : "$expenseCount transactions",
+                          style: TextStyle(color: Colors.black, fontSize: 14),
                         ),
                         trailing: Text(
                           '\$${category.totalAmount}',

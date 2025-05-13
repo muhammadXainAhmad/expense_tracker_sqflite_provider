@@ -15,6 +15,10 @@ class CategoryProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     _categories = await dbHelper.getCategory();
+    var expenses = await dbHelper.getExpense();
+    for (var category in _categories) {
+      await dbHelper.updateCategoryEntries(category, expenses);
+    }
     _isLoading = false;
     notifyListeners();
   }
