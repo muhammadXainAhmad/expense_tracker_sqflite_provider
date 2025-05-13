@@ -36,34 +36,34 @@ class CategoryScreen extends StatelessWidget {
               color: Colors.blue.shade900,
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
-                child: Column(
-                  children: [
-                    Text(
-                      "Total Balance",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    Consumer<ExpenseProvider>(
-                      builder: (context, provider, child) {
-                        return Text(
-                          "\$ ${provider.balance.toStringAsFixed(2)}",
-                          style: TextStyle(color: Colors.white, fontSize: 38),
-                        );
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Consumer<ExpenseProvider>(
+                  builder: (context, provider, child) {
+                    return Column(
                       children: [
                         Text(
-                          'Total Income: \$${context.read<ExpenseProvider>().totalIncome.toStringAsFixed(2)}',
-                          style: TextStyle(color: Colors.white),
+                          "Total Balance",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         Text(
-                          "Total Expenses: \$${context.read<ExpenseProvider>().totalExpense.toStringAsFixed(2)}",
-                          style: TextStyle(color: Colors.white),
+                          "\$ ${provider.balance.toStringAsFixed(2)}",
+                          style: TextStyle(color: Colors.white, fontSize: 38),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Total Income: \$${provider.totalIncome.toStringAsFixed(2)}',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text(
+                              "Total Expenses: \$${provider.totalExpense.toStringAsFixed(2)}",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -113,7 +113,10 @@ class CategoryScreen extends StatelessWidget {
                   itemCount: categoryProvider.categories.length,
                   itemBuilder: (context, index) {
                     final category = categoryProvider.categories[index];
-                    final expenseCount = category.entries;
+                    final expenseCount =
+                        expenseProvider.expenseList
+                            .where((e) => e.category == category.title)
+                            .length;
                     final categoryTotal =
                         expenseProvider.categoryExpenseTotals[category.title] ??
                         0;
@@ -151,9 +154,7 @@ class CategoryScreen extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          expenseCount == 1
-                              ? "$expenseCount transaction"
-                              : "$expenseCount transactions",
+                          "Transactions: $expenseCount",
                           style: TextStyle(color: Colors.black, fontSize: 14),
                         ),
                         trailing: Text(

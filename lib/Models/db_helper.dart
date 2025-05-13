@@ -61,14 +61,6 @@ class DBHelper {
     return mData.map((map) => ExpenseCategory.fromMap(map)).toList();
   }
 
-  Future<void> updateCategoryEntries(
-    ExpenseCategory category,
-    List<Expense> expenses,
-  ) async {
-    category.entries =
-        expenses.where((e) => e.category == category.title).length;
-  }
-
   Future<List<Expense>> getExpense() async {
     var db = await getDB();
     List<Map<String, dynamic>> mData = await db.query(eTableName);
