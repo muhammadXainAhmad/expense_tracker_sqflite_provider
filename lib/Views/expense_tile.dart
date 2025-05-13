@@ -1,9 +1,9 @@
+import 'package:expense_tracker_sqflite_provider/Models/expense_model.dart';
+import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
+import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_sqflite_provider/Constants/icons.dart';
-import 'package:expense_tracker_sqflite_provider/Models/expense_model.dart';
-import 'package:expense_tracker_sqflite_provider/Views/add_expense_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:expense_tracker_sqflite_provider/Providers/expense_provider.dart';
 
 class ExpenseTile extends StatelessWidget {
   final Expense expense;
@@ -45,7 +45,9 @@ class ExpenseTile extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        "${expense.paymentType} · ${expense.category}· ${expense.transactionType}",
+        expense.transactionType == "Expense"
+            ? "${expense.paymentType} · ${expense.category}"
+            : expense.transactionType,
         style: const TextStyle(color: Colors.black, fontSize: 14),
       ),
       trailing: Column(

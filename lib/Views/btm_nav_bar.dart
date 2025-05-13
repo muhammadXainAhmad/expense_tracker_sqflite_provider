@@ -39,7 +39,7 @@ class BottomNavBar extends StatelessWidget {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 6.0,
-        color: Colors.tealAccent.shade400,
+        color: Colors.blue.shade900,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -48,12 +48,12 @@ class BottomNavBar extends StatelessWidget {
               height: 120,
               child: IconButton(
                 icon: Icon(
-                  Icons.home_outlined,
+                  Icons.home,
                   size: 36,
                   color:
                       navProvider.selectedIndex == 0
-                          ? Colors.black
-                          : Colors.grey.shade600,
+                          ? Colors.white
+                          : Colors.white30,
                 ),
                 onPressed: () => navProvider.updateIndex(0),
               ),
@@ -63,12 +63,12 @@ class BottomNavBar extends StatelessWidget {
               height: 120,
               child: IconButton(
                 icon: Icon(
-                  Icons.bar_chart_outlined,
+                  Icons.bar_chart,
                   size: 36,
                   color:
                       navProvider.selectedIndex == 1
-                          ? Colors.black
-                          : Colors.grey.shade600,
+                          ? Colors.white
+                          : Colors.white30,
                 ),
                 onPressed: () => navProvider.updateIndex(1),
               ),
@@ -80,12 +80,12 @@ class BottomNavBar extends StatelessWidget {
 
               child: IconButton(
                 icon: Icon(
-                  Icons.settings_outlined,
+                  Icons.settings,
                   size: 32,
                   color:
                       navProvider.selectedIndex == 2
-                          ? Colors.black
-                          : Colors.grey.shade600,
+                          ? Colors.white
+                          : Colors.white30,
                 ),
                 onPressed: () => navProvider.updateIndex(2),
               ),

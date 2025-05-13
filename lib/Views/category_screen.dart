@@ -14,7 +14,6 @@ class CategoryScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CategoryProvider>(context, listen: false).fetchCategories();
       Provider.of<ExpenseProvider>(context, listen: false).getExpense();
-    
     });
     return Scaffold(
       appBar: AppBar(
@@ -34,22 +33,25 @@ class CategoryScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               elevation: 2,
-              color: Colors.tealAccent.shade400,
+              color: Colors.blue.shade900,
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
                   children: [
                     Text(
                       "Total Balance",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     Text(
                       r"$ 32,500",
-                      style: TextStyle(color: Colors.black, fontSize: 38),
+                      style: TextStyle(color: Colors.white, fontSize: 38),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [Text("Income"), Text("Expenses")],
+                      children: [
+                        Text("Income", style: TextStyle(color: Colors.white)),
+                        Text("Expenses", style: TextStyle(color: Colors.white)),
+                      ],
                     ),
                   ],
                 ),
@@ -118,8 +120,7 @@ class CategoryScreen extends StatelessWidget {
                               Icons.circle,
                               size: 50,
                               color:
-                                  categoryColors[category.title] ??
-                                  Colors.grey,
+                                  categoryColors[category.title] ?? Colors.grey,
                             ),
                             Icon(
                               icons[category.title] ?? Icons.category,
