@@ -10,11 +10,11 @@ A simple and elegant Flutter application that helps you track your income and ex
   - Total Balance, Income, and Expense display.
   - Day, Week, and Month-wise expense summaries.
 
--  **Categories** 🗃️
+- **Categories** 🗃️
   - View expenses categorized (e.g., Food, Transport, Shopping, etc.)
   - Custom icons and color codes for each category.
 
--  **Add Transactions** ➕
+- **Add Transactions** ➕
   - Add income or expense transactions.
   - Assign category and date.
   
